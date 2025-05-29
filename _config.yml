@@ -17,11 +17,11 @@ minimal_mistakes_skin    : "neon" # "air", "aqua", "contrast", "dark", "dirt", "
 # Site Settings
 locale                   : "en-US"
 rtl                      : # true, false (default) # turns direction of the page into right to left for RTL languages
-title                    : "Site Title"
+title                    : "HXETRP의 블로그"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "hxetrp52"
-description              : "An amazing website."
+description              : "이건 대체 뭐죠?"
 url                      : "https://hxetrp52.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
@@ -115,7 +115,7 @@ analytics:
 author:
   name             : "HXETRP52"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I am an **amazing** perso"
+  bio              : "내일은 밝은 세상이 될거야!"
   location         : "Somewhere"
   email            :
   links:
