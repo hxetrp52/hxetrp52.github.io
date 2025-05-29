@@ -114,10 +114,10 @@ analytics:
 # Site Author
 author:
   name             : "HXETRP52"
-  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : "assets/new profile.png"
   bio              : "내일은 밝은 세상이 될거야!"
-  location         : "Somewhere"
-  email            :
+  location         : "서울디지텍고등학교"
+  email            : "sdh240210@sdh.hs.kr"
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
@@ -133,7 +133,7 @@ author:
       # url: "https://facebook.com/"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      # url: "https://github.com/"
+      url:  "https://github.com/hxetrp52"
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       # url: "https://instagram.com/"
