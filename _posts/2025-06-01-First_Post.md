@@ -1,5 +1,5 @@
 ---
-layout : single
+layout : post
 title : "깃허브 블로그 첫 글"
 ---
 
