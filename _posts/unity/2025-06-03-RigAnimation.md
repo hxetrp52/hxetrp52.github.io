@@ -15,7 +15,7 @@ date: 2025-06-03
 일단 하나의 캐릭터를 제작해보고 나중에 다른 캐릭터들도 제작할 예정이다.   
      
 가장 먼저 제작할 캐릭터는 **내 주력캐릭터인 "웨펀마스터"다.** <br>
-<img src = "../../assets/Image/RevaRevive/WeaponMasterSlect.webp" width=50%>      
+<img src = "../../assets/Image/RevaRevive/WeaponMasterSlect.webp">      
 <br>
 일단 게임의 리소스를 만들 때 사용할 툴로 "**Aseprite**를 사용할 것이다.    
 그림을 못 그리는 내가 그나마 찍을 수 있는게 도트이기 때문에 캐릭터는 원작과는 다른 방식으로 제작 해야 할 것 같다.    
@@ -57,24 +57,24 @@ date: 2025-06-03
 > <span style="color:gray">Aseprite에서 캐릭터 작업할 때 레이어 나눠서 작업하면 분리하는데 편하다!</span>
 > ### <span style="color:orange">3. 포토샵 레이어 편집</span>
 > 분리한 관절마다 포토샵에서 레이어로 나눠준 후 다시 재조립한다.
-> <br><img src = "../../assets/Image/RevaRevive/PsbImage.png" width=80%><br>
+> <br><img src = "../../assets/Image/RevaRevive/PsbImage.png"><br>
 > <span style="color:gray">관절이 들어가 움직이기때문에 움직일 부분마다 분리해주자</span>
 > ### <span style="color:orange">4. 포토샵 PSB저장</span>
 > **파일 -> 다른 이름으로 저장**에서 저장 형식을 **대용량 문서 형식(PSB)** 으로 저장한다.
-> <br><img src = "../../assets/Image/RevaRevive/PsbSave.png" width=80%><br>
+> <br><img src = "../../assets/Image/RevaRevive/PsbSave.png"><br>
 > <span style="color:gray">주의! PSD형식 아님!</span>
 > ### <span style="color:orange">5. 유니티에서 불러오기</span>
 > 유니티에서 저장한 PSB파일을 그대로 드래그해서 넣으면 그린 캐릭터가 생긴다!
-> <br><img src = "../../assets/Image/RevaRevive/PSBLoad.png" width=80%><br>
+> <br><img src = "../../assets/Image/RevaRevive/PSBLoad.png"><br>
 > 만들어진 캐릭터에 기본 설정을 하면된다.    
 > 난 도트로 만들 것이기때문에 **Filter Mode**와 **Compression**을    
 > 각각 Point(no filter), none으로 바꿔줬다.
 > ### <span style="color:orange">6. 뼈(Bone) 생성</span>
 > 인스펙터에서 **Open Sprite Editor**를 클릭해서 스프라이트 에디터 창에 들어가보면
-> <br><img src = "../../assets/Image/RevaRevive/SpriteEditor.png" width=80%><br>
+> <br><img src = "../../assets/Image/RevaRevive/SpriteEditor.png"><br>
 > 캐릭터가 레이어대로 분리되어있다. 슬라이스(하얀테두리)가 되어 있으면 정상이다.   
 > 여기서 왼쪽 상단에 **Sprite Editor**를 클릭해 **Skinning Editor**를 클릭한다.
-> <br><img src = "../../assets/Image/RevaRevive/CreateBone.png" width=80%><br>
+> <br><img src = "../../assets/Image/RevaRevive/CreateBone.png"><br>
 > 캐릭터가 다시 조립되고 드디어 뼈를 심을 수 있다.    
 > 먼저 **Create Bone**을 이용해 캐릭터에게 뼈를 심을 수 있다.    
 > 뼈는 마우스 우클릭으로 뼈를 심을 수 있다. 좌클릭은 뼈 연속 연결해제이고    
@@ -85,7 +85,7 @@ date: 2025-06-03
 >
 > 색깔이 칠해져 있는 비중이 그 부분이 뼈가 얼마나 간섭하는지를 나타낸다.   
 > 원치 않는 뼈가 간섭되는 것을 해결하기 위해 각 메쉬에 대해 뼈를 할당해줄 것이다.     
-> <br><img src = "../../assets/Image/RevaRevive/BoneInfluence.png" width=80%><br>
+> <br><img src = "../../assets/Image/RevaRevive/BoneInfluence.png"><br>
 > **Bone Influence**를 클릭하고 분리된 부위를 클릭해보면 어떤 뼈가 간섭하고 있는지를 확인 할 수 있다.   
 > 우리는 주황색, 노랑색 몸통 뼈만 필요하니 나머지는 -버튼을 눌러 해제해주면 된다.    
 > 이걸 모든 부위에 설정해주면 된다!       
@@ -95,14 +95,14 @@ date: 2025-06-03
 > 모든 과정이 끝나고 어색함이 없으면 상단에 **Apply**를 눌러 저장하면 된다
 ## <span style="color:orange">애니메이션 제작!</span>
 
-<br><img src = "../../assets/Image/RevaRevive/CharactorBone.png" width=80%><br>
+<br><img src = "../../assets/Image/RevaRevive/CharactorBone.png"><br>
 이제 뼈를 다 박았으면 이렇게 캐릭터를 하이어라키에 놓았을 때 설정해준 뼈들이 보이게된다.    
 이제 이 뼈들로 애니메이션을 제작할 수 있다.   
 이 오브젝트에 애니메이션 클립을 추가하고 녹화 버튼을 누르고 뼈를 회전, 움직여서 애니메이션을 찍으면 된다!
-<br><img src = "../../assets/Image/RevaRevive/CreateAnimation .png" width=80%><br>
+<br><img src = "../../assets/Image/RevaRevive/CreateAnimation .png"><br>
 사용자의 숙련도, 캐릭터의 완성도에 따라 애니메이션의 퀄리티가 달라지지만 스프라이트 방식의 애니메이션보다    
  빠르게 제작할 수 있다는 것이 장점이라고 생각한다.    
-<br><img src = "../../assets/Image/RevaRevive/AttackMotion.png" width=80%><br>
+<br><img src = "../../assets/Image/RevaRevive/AttackMotion.png"><br>
 <span style="color:gray">스켈레톤 애니메이션을 이용해서 캐릭터의 Idle, Move, Jump, Attack, Combo 등 다양한 애니메이션을 찍었다!</span>
 
 ## <span style="color:orange">마무리!</span>
