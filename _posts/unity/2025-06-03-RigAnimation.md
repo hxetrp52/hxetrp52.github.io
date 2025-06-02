@@ -93,7 +93,7 @@ date: 2025-06-03
 > 캐릭터를 자세히 보면 어딘가 깨져있거나 울퉁불퉁한 부분이 있을 것이다.   
 > 그럴땐 **Edit Geometry**를 클릭하여 분리된 부분의 메쉬를 늘려서 수정하면 된다.   
 > 모든 과정이 끝나고 어색함이 없으면 상단에 **Apply**를 눌러 저장하면 된다
-
+<br>
 ## <span style="color:orange">애니메이션 제작!</span>
 
 <br><img src = "../../assets/Image/RevaRevive/CharactorBone.png"><br>
