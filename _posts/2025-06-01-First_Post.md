@@ -1,6 +1,8 @@
 ---
-layout : post
+layout : archive
 title : "깃허브 블로그 첫 글"
+categories:
+  - Blog
 ---
 
 # 깃허브 블로그의 시작
