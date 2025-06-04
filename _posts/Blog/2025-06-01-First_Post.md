@@ -1,7 +1,14 @@
 ---
-title : "깃허브 블로그 첫 글"
+title:  "[Github 블로그] 깃허브(Github) 블로그를 생성해 보자." 
+excerpt: "Jekyll로 깃허브 블로그를 만들어 보았다."
+
 categories:
   - Blog
+tags:
+  - [Blog, jekyll, Github, Git, minimal-mistake]
+
+date: 2020-05-23
+last_modified_at: 2020-05-25
 ---
 
 # 깃허브 블로그의 시작
