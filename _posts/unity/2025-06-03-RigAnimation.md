@@ -1,6 +1,7 @@
 ---
 title : "레바의 모험 모작(1) - 2D 리깅 애니메이션"
 
+layout : archive
 
 categories:
   - unity

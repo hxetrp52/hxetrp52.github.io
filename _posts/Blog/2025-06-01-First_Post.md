@@ -1,4 +1,5 @@
 ---
+layout : archive
 title : "깃허브 블로그 첫 글"
 categories:
   - Blog
