@@ -8,7 +8,7 @@
             📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">{{sum}}</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
       </li>
       <li>
-         <span clasㄴs="nav__sub-title"><img src="https://img.shields.io/badge/unity=for-the-badge&logo=unity&logoColor=white">유니티</span>
+         <span clasㄴs="nav__sub-title">유니티</span>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "unity" %}
@@ -16,7 +16,7 @@
                     {% endif %}
                 {% endfor %}
             </ul>
-         <span class="nav__sub-title"><img src="https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=csharp&logoColor=white">C#</span>
+         <span class="nav__sub-title">C#</span>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "ccharp" %}
@@ -32,7 +32,7 @@
                     {% endif %}
                 {% endfor %}
             </ul>
-        <span class="nav__sub-title"><img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">깃허브</span>
+        <span class="nav__sub-title">깃허브</span>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "GitHub" %}
