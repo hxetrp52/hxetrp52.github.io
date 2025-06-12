@@ -36,7 +36,7 @@
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "GitHub" %}
-                        <li><a href="/categories/Github" class="">깃허브 ({{category[1].size}})</a></li>
+                        <li><a href="/categories/GitHub" class="">깃허브 ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
