@@ -3,7 +3,10 @@ title : "레바의 모험 모작(2) - 플레이어 스크립트"
 
 categories:
   - unity
-  
+
+tags:
+  - [Reva's adventure]
+
 date: 2025-06-05
 ---
 

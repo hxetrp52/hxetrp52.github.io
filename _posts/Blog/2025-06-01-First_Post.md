@@ -4,8 +4,7 @@ excerpt: "Jekyll로 깃허브 블로그를 만들어 보았다."
 
 categories:
   - Blog
-tags:
-  - [Blog, jekyll, Github, Git, minimal-mistake]
+
 
 date: 2020-05-23
 last_modified_at: 2020-05-25
