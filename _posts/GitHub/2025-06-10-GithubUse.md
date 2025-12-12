@@ -50,7 +50,7 @@ date: 2025-06-10
  >  Fork보다 GUI내에서 지원하는 기능이 적고 프로젝트에 기록을 확인 하기 어렵다.     
  >  <span style="color : gray">(커밋 기록이나 브랜치 기록 등)   
 
- 이 글을 끄는 나는 각 GUI를 용도를 나눠서 사용한다.   
+ 이 글을 쓰는 나는 각 GUI를 용도를 나눠서 사용한다.   
  간단하게 개인 저장의 용도로만 사용할려면 <span style="color : skyblue">GitHub DeskTop</span>을 사용하고    
  팀원과 협업을 하는 프로젝트 또는 장기 프로젝트면 <span style="color : skyblue">Git Fork</span>를 사용한다.     
 
