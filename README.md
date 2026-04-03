@@ -46,6 +46,7 @@ printf 'your-password' | sha256sum
 > `writer.password_sha256` is visible in page source because this site is static.
 > This is a convenience feature, not high-security authentication.
 > Also, set `writer.enabled: true` **only after** all writer settings are completed.
+> Because the hash is public, weak passwords can be brute-forced offline. Use a long, unique password dedicated only to this writer feature (never reuse your main account password).
 
 ## Notable features
 

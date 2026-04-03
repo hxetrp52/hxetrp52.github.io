@@ -37,7 +37,7 @@
     return;
   }
 
-  let sessionToken = window.localStorage.getItem("writerSessionToken") || "";
+  let sessionToken = window.sessionStorage.getItem("writerSessionToken") || "";
   let passwordHash = configPasswordHash;
   if (!passwordHash) {
     setStatus("_config.yml의 writer.password_sha256 설정이 비어 있습니다.");
@@ -73,7 +73,7 @@
     }
 
     sessionToken = secureRandomHex(32);
-    window.localStorage.setItem("writerSessionToken", sessionToken);
+    window.sessionStorage.setItem("writerSessionToken", sessionToken);
     passwordInput.value = "";
     renderAuthState();
     setStatus("인증 성공. 글 작성이 활성화되었습니다.");
@@ -81,7 +81,7 @@
 
   function onLogout() {
     sessionToken = "";
-    window.localStorage.removeItem("writerSessionToken");
+    window.sessionStorage.removeItem("writerSessionToken");
     renderAuthState();
     setStatus("로그아웃되었습니다.");
   }
@@ -94,7 +94,9 @@
 
     const title = String(titleInput.value || "").trim();
     const body = String(bodyInput.value || "").trim();
-    const category = normalizeCategory(String(categoryInput.value || "").trim());
+    const normalizedCategory = normalizeCategory(String(categoryInput.value || ""));
+    const fallbackCategory = normalizeCategory(defaultCategory);
+    const category = normalizedCategory || fallbackCategory || "";
     const tags = parseTags(String(tagsInput.value || ""));
     const draft = Boolean(draftInput.checked);
     const dateValue = String(dateInput.value || "").trim();
@@ -113,6 +115,18 @@
     const slug = makeSlug(slugInput.value || title);
     const date = toIsoDate(dateValue);
     const fileDate = date.slice(0, 10);
+    if (!isSafeSlug(slug)) {
+      setStatus("슬러그 형식이 올바르지 않습니다.");
+      return;
+    }
+    if (!isSafeFileDate(fileDate)) {
+      setStatus("게시 일시 형식이 올바르지 않습니다.");
+      return;
+    }
+    if (category && !isSafeCategory(category)) {
+      setStatus("카테고리 형식이 올바르지 않습니다.");
+      return;
+    }
     const categoryFolder = category ? "/" + category : "";
     const basePath = `${postsPath}${categoryFolder}/${fileDate}-${slug}.md`;
 
@@ -298,5 +312,17 @@
 
   function isSafePostPath(path) {
     return /^_posts(?:\/[A-Za-z0-9가-힣_-]+)?\/\d{4}-\d{2}-\d{2}-[A-Za-z0-9가-힣_-]+(?:-\d+)?\.md$/.test(path);
+  }
+
+  function isSafeCategory(value) {
+    return /^[A-Za-z0-9가-힣_-]+$/.test(value);
+  }
+
+  function isSafeSlug(value) {
+    return /^[A-Za-z0-9가-힣_-]+$/.test(value);
+  }
+
+  function isSafeFileDate(value) {
+    return /^\d{4}-\d{2}-\d{2}$/.test(value);
   }
 })();
