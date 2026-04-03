@@ -22,13 +22,13 @@ This repository now includes a browser-based post writer page:
 
 - URL: `/write/`
 - Files:
-  - `/home/runner/work/hxetrp52.github.io/hxetrp52.github.io/_pages/write.md`
-  - `/home/runner/work/hxetrp52.github.io/hxetrp52.github.io/assets/js/writer.js`
+  - `_pages/write.md`
+  - `assets/js/writer.js`
 
 ### Required setup
 
 1. Set writer config in:
-   - `/home/runner/work/hxetrp52.github.io/hxetrp52.github.io/_config.yml`
+   - `_config.yml`
 2. Fill `writer.password_sha256` with your password SHA-256 hash (hex lowercase).
 3. Keep `writer.github_owner`, `writer.github_repo`, `writer.default_branch` correct for your repository.
 4. Open `/write/`, enter:
@@ -45,6 +45,7 @@ printf 'your-password' | sha256sum
 > Important security note:
 > `writer.password_sha256` is visible in page source because this site is static.
 > This is a convenience feature, not high-security authentication.
+> Also, set `writer.enabled: true` **only after** all writer settings are completed.
 
 ## Notable features
 

@@ -71,7 +71,7 @@
       return;
     }
 
-    sessionToken = await sha256Hex(String(Date.now()) + ":" + passwordHash + ":" + Math.random());
+    sessionToken = await sha256Hex(String(Date.now()) + ":" + passwordHash + ":" + secureRandomHex(16));
     window.localStorage.setItem("writerSessionToken", sessionToken);
     passwordInput.value = "";
     renderAuthState();
@@ -189,14 +189,14 @@
     return d.toISOString();
   }
 
-  function yamlEscape(value) {
-    return String(value).replace(/"/g, '\\"');
+  function yamlSingleQuoteEscape(value) {
+    return String(value).replace(/'/g, "''");
   }
 
   function buildMarkdown(payload) {
     const lines = [];
     lines.push("---");
-    lines.push(`title: "${yamlEscape(payload.title)}"`);
+    lines.push(`title: '${yamlSingleQuoteEscape(payload.title)}'`);
     lines.push("layout: single");
     lines.push(`date: "${payload.date}"`);
     if (payload.category) {
@@ -276,6 +276,14 @@
     const data = new TextEncoder().encode(text);
     const hash = await window.crypto.subtle.digest("SHA-256", data);
     return Array.from(new Uint8Array(hash))
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join("");
+  }
+
+  function secureRandomHex(byteLength) {
+    const bytes = new Uint8Array(byteLength);
+    window.crypto.getRandomValues(bytes);
+    return Array.from(bytes)
       .map((b) => b.toString(16).padStart(2, "0"))
       .join("");
   }

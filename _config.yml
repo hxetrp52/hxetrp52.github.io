@@ -105,13 +105,13 @@ social:
 
 # In-site post writer settings
 writer:
-  enabled                : true
+  enabled                : false # password_sha256 설정 전에는 false 유지 권장
   github_owner           : "hxetrp52"
   github_repo            : "hxetrp52.github.io"
   default_branch         : "main"
   posts_path             : "_posts"
   default_category       : "Blog"
-  password_sha256        : "" # 반드시 SHA-256 해시(소문자 hex) 입력
+  password_sha256        : "SET_THIS_TO_SHA256_HEX" # 반드시 SHA-256 해시(소문자 hex) 입력
 
 # Analytics
 analytics:
