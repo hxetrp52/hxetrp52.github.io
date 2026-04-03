@@ -47,6 +47,7 @@ printf 'your-password' | sha256sum
 > This is a convenience feature, not high-security authentication.
 > Also, set `writer.enabled: true` **only after** all writer settings are completed.
 > Because the hash is public, weak passwords can be brute-forced offline. Use a long, unique password dedicated only to this writer feature (never reuse your main account password).
+> This implementation also requires entering your GitHub Personal Access Token each use (token is not persisted), so the password gate mainly prevents casual misuse and does not replace server-side authentication.
 
 ## Notable features
 

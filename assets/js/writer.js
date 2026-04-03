@@ -3,6 +3,8 @@
 
   const app = document.getElementById("writer-app");
   if (!app) return;
+  const SAFE_SEGMENT_PATTERN = /^[A-Za-z0-9가-힣_-]+$/;
+  const STRIP_UNSAFE_PATTERN = /[^\w\-가-힣]/g;
 
   const enabled = String(app.dataset.enabled) === "true";
   const repoOwner = String(app.dataset.githubOwner || "").trim();
@@ -37,7 +39,7 @@
     return;
   }
 
-  let sessionToken = window.sessionStorage.getItem("writerSessionToken") || "";
+  let unlocked = window.sessionStorage.getItem("writerUnlocked") === "1";
   let passwordHash = configPasswordHash;
   if (!passwordHash) {
     setStatus("_config.yml의 writer.password_sha256 설정이 비어 있습니다.");
@@ -72,22 +74,22 @@
       return;
     }
 
-    sessionToken = secureRandomHex(32);
-    window.sessionStorage.setItem("writerSessionToken", sessionToken);
+    unlocked = true;
+    window.sessionStorage.setItem("writerUnlocked", "1");
     passwordInput.value = "";
     renderAuthState();
     setStatus("인증 성공. 글 작성이 활성화되었습니다.");
   }
 
   function onLogout() {
-    sessionToken = "";
-    window.sessionStorage.removeItem("writerSessionToken");
+    unlocked = false;
+    window.sessionStorage.removeItem("writerUnlocked");
     renderAuthState();
     setStatus("로그아웃되었습니다.");
   }
 
   async function onPublish() {
-    if (!sessionToken) {
+    if (!unlocked) {
       setStatus("먼저 인증을 완료하세요.");
       return;
     }
@@ -158,7 +160,7 @@
   }
 
   function renderAuthState() {
-    const authed = Boolean(sessionToken);
+    const authed = Boolean(unlocked);
     editorSection.style.display = authed ? "block" : "none";
     logoutButton.style.display = authed ? "inline-block" : "none";
   }
@@ -176,7 +178,7 @@
   }
 
   function normalizeCategory(value) {
-    return value.trim().replace(/\s+/g, "-").replace(/[^\w\-가-힣]/g, "");
+    return value.trim().replace(/\s+/g, "-").replace(STRIP_UNSAFE_PATTERN, "");
   }
 
   function parseTags(value) {
@@ -192,7 +194,7 @@
       .toLowerCase()
       .trim()
       .replace(/\s+/g, "-")
-      .replace(/[^\w\-가-힣]/g, "")
+      .replace(STRIP_UNSAFE_PATTERN, "")
       .replace(/\-+/g, "-")
       .replace(/^\-+|\-+$/g, "");
     return value || "untitled-post";
@@ -302,24 +304,16 @@
       .join("");
   }
 
-  function secureRandomHex(byteLength) {
-    const bytes = new Uint8Array(byteLength);
-    window.crypto.getRandomValues(bytes);
-    return Array.from(bytes)
-      .map((b) => b.toString(16).padStart(2, "0"))
-      .join("");
-  }
-
   function isSafePostPath(path) {
     return /^_posts(?:\/[A-Za-z0-9가-힣_-]+)?\/\d{4}-\d{2}-\d{2}-[A-Za-z0-9가-힣_-]+(?:-\d+)?\.md$/.test(path);
   }
 
   function isSafeCategory(value) {
-    return /^[A-Za-z0-9가-힣_-]+$/.test(value);
+    return SAFE_SEGMENT_PATTERN.test(value);
   }
 
   function isSafeSlug(value) {
-    return /^[A-Za-z0-9가-힣_-]+$/.test(value);
+    return SAFE_SEGMENT_PATTERN.test(value);
   }
 
   function isSafeFileDate(value) {
