@@ -12,6 +12,7 @@
   const configPasswordHash = String(app.dataset.passwordSha256 || "").trim().toLowerCase();
   const defaultCategory = String(app.dataset.defaultCategory || "Blog").trim();
   const statusEl = document.getElementById("writer-status");
+  const MAX_DUPLICATE_RETRIES = 6;
 
   const authSection = document.getElementById("writer-auth-section");
   const editorSection = document.getElementById("writer-editor-section");
@@ -71,7 +72,7 @@
       return;
     }
 
-    sessionToken = await sha256Hex(String(Date.now()) + ":" + passwordHash + ":" + secureRandomHex(16));
+    sessionToken = secureRandomHex(32);
     window.localStorage.setItem("writerSessionToken", sessionToken);
     passwordInput.value = "";
     renderAuthState();
@@ -161,7 +162,7 @@
   }
 
   function normalizeCategory(value) {
-    return value.replace(/\s+/g, "-").replace(/[^\w\-가-힣]/g, "").trim();
+    return value.trim().replace(/\s+/g, "-").replace(/[^\w\-가-힣]/g, "");
   }
 
   function parseTags(value) {
@@ -219,7 +220,7 @@
 
   async function createPostWithRetry(options) {
     const { owner, repo, basePath, markdown, token, branch } = options;
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < MAX_DUPLICATE_RETRIES; i++) {
       const path = i === 0 ? basePath : appendSuffix(basePath, i + 1);
       const response = await putFile(owner, repo, path, markdown, token, branch);
       if (response.ok) {
@@ -238,7 +239,14 @@
   }
 
   async function putFile(owner, repo, path, markdown, token, branch) {
-    const url = `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/${encodeURIComponent(path).replace(/%2F/g, "/")}`;
+    if (!isSafePostPath(path)) {
+      throw new Error("허용되지 않은 파일 경로입니다.");
+    }
+    const encodedPath = path
+      .split("/")
+      .map((segment) => encodeURIComponent(segment))
+      .join("/");
+    const url = `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/${encodedPath}`;
     const body = {
       message: `Add post: ${path}`,
       content: base64EncodeUtf8(markdown),
@@ -286,5 +294,9 @@
     return Array.from(bytes)
       .map((b) => b.toString(16).padStart(2, "0"))
       .join("");
+  }
+
+  function isSafePostPath(path) {
+    return /^_posts(?:\/[A-Za-z0-9가-힣_-]+)?\/\d{4}-\d{2}-\d{2}-[A-Za-z0-9가-힣_-]+(?:-\d+)?\.md$/.test(path);
   }
 })();
