@@ -16,6 +16,36 @@ Minimal Mistakes is a flexible two-column Jekyll theme, perfect for building per
 
 ![layout examples](screenshot-layouts.png)
 
+## In-site Post Writer (this repository custom feature)
+
+This repository now includes a browser-based post writer page:
+
+- URL: `/write/`
+- Files:
+  - `/home/runner/work/hxetrp52.github.io/hxetrp52.github.io/_pages/write.md`
+  - `/home/runner/work/hxetrp52.github.io/hxetrp52.github.io/assets/js/writer.js`
+
+### Required setup
+
+1. Set writer config in:
+   - `/home/runner/work/hxetrp52.github.io/hxetrp52.github.io/_config.yml`
+2. Fill `writer.password_sha256` with your password SHA-256 hash (hex lowercase).
+3. Keep `writer.github_owner`, `writer.github_repo`, `writer.default_branch` correct for your repository.
+4. Open `/write/`, enter:
+   - password
+   - GitHub Personal Access Token with repository write permission
+5. Write and publish posts directly into `_posts/`.
+
+Example SHA-256 hash generation:
+
+```bash
+printf 'your-password' | sha256sum
+```
+
+> Important security note:
+> `writer.password_sha256` is visible in page source because this site is static.
+> This is a convenience feature, not high-security authentication.
+
 ## Notable features
 
 - Bundled as a "theme gem" for easier installation/upgrading.

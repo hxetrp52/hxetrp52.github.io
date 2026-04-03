@@ -8,7 +8,17 @@ sidebar_main: false
 
 <noscript>이 기능은 JavaScript가 필요합니다.</noscript>
 
-<div id="writer-app" class="writer-app" data-enabled="{{ site.writer.enabled | default: false }}">
+<div
+  id="writer-app"
+  class="writer-app"
+  data-enabled="{{ site.writer.enabled | default: false }}"
+  data-github-owner="{{ site.writer.github_owner }}"
+  data-github-repo="{{ site.writer.github_repo }}"
+  data-default-branch="{{ site.writer.default_branch | default: 'main' }}"
+  data-posts-path="{{ site.writer.posts_path | default: '_posts' }}"
+  data-default-category="{{ site.writer.default_category | default: 'Blog' }}"
+  data-password-sha256="{{ site.writer.password_sha256 | default: '' }}"
+>
   <p>사이트 내부 글쓰기 기능</p>
 
   <section id="writer-auth-section">
@@ -30,7 +40,7 @@ sidebar_main: false
     <input id="writer-slug" type="text" maxlength="120" placeholder="비워두면 제목 기반 자동 생성" />
 
     <label for="writer-category">카테고리</label>
-    <input id="writer-category" type="text" value="{{ site.writer.default_category | default: 'Blog' }}" />
+    <input id="writer-category" type="text" value="" />
 
     <label for="writer-tags">태그(쉼표로 구분)</label>
     <input id="writer-tags" type="text" placeholder="jekyll, github-pages" />
@@ -52,6 +62,13 @@ sidebar_main: false
   <section>
     <h3>상태</h3>
     <pre id="writer-status" style="white-space: pre-wrap;"></pre>
+  </section>
+
+  <section>
+    <h3>GitHub 토큰</h3>
+    <p>토큰은 브라우저 저장소에 보관하지 않고, 이 입력칸 메모리에서만 사용됩니다.</p>
+    <label for="writer-github-token">Personal Access Token (repo 권한)</label>
+    <input id="writer-github-token" type="password" autocomplete="off" />
   </section>
 </div>
 

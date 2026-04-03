@@ -108,8 +108,10 @@ writer:
   enabled                : true
   github_owner           : "hxetrp52"
   github_repo            : "hxetrp52.github.io"
+  default_branch         : "main"
   posts_path             : "_posts"
   default_category       : "Blog"
+  password_sha256        : "" # 반드시 SHA-256 해시(소문자 hex) 입력
 
 # Analytics
 analytics:

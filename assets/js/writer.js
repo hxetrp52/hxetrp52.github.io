@@ -5,6 +5,12 @@
   if (!app) return;
 
   const enabled = String(app.dataset.enabled) === "true";
+  const repoOwner = String(app.dataset.githubOwner || "").trim();
+  const repoName = String(app.dataset.githubRepo || "").trim();
+  const defaultBranch = String(app.dataset.defaultBranch || "main").trim();
+  const postsPath = String(app.dataset.postsPath || "_posts").trim();
+  const configPasswordHash = String(app.dataset.passwordSha256 || "").trim().toLowerCase();
+  const defaultCategory = String(app.dataset.defaultCategory || "Blog").trim();
   const statusEl = document.getElementById("writer-status");
 
   const authSection = document.getElementById("writer-auth-section");
@@ -21,6 +27,7 @@
   const dateInput = document.getElementById("writer-date");
   const draftInput = document.getElementById("writer-draft");
   const bodyInput = document.getElementById("writer-body");
+  const githubTokenInput = document.getElementById("writer-github-token");
   const publishButton = document.getElementById("writer-publish-button");
 
   if (!enabled) {
@@ -30,10 +37,20 @@
   }
 
   let sessionToken = window.localStorage.getItem("writerSessionToken") || "";
-  let passwordHash = window.localStorage.getItem("writerPasswordHash") || "";
-  let githubToken = window.localStorage.getItem("writerGithubToken") || "";
+  let passwordHash = configPasswordHash;
+  if (!passwordHash) {
+    setStatus("_config.yml의 writer.password_sha256 설정이 비어 있습니다.");
+    authSection.style.display = "none";
+    return;
+  }
+  if (!repoOwner || !repoName) {
+    setStatus("_config.yml의 writer.github_owner / writer.github_repo 설정이 필요합니다.");
+    authSection.style.display = "none";
+    return;
+  }
 
   setDefaultDate();
+  categoryInput.value = defaultCategory;
   renderAuthState();
   setStatus("초기화 완료. 비밀번호를 입력해 권한을 얻으세요.");
 
@@ -48,30 +65,10 @@
       return;
     }
 
-    if (!passwordHash) {
-      passwordHash = window.prompt("최초 1회 설정: SHA-256 비밀번호 해시를 입력하세요.");
-      if (!passwordHash) {
-        setStatus("해시가 없어 인증을 진행할 수 없습니다.");
-        return;
-      }
-      passwordHash = String(passwordHash).trim().toLowerCase();
-      window.localStorage.setItem("writerPasswordHash", passwordHash);
-    }
-
     const digest = await sha256Hex(password);
     if (digest !== passwordHash) {
       setStatus("비밀번호가 올바르지 않습니다.");
       return;
-    }
-
-    if (!githubToken) {
-      githubToken = window.prompt("GitHub Personal Access Token(repo 권한)을 입력하세요.");
-      if (!githubToken) {
-        setStatus("토큰이 없어 발행할 수 없습니다.");
-        return;
-      }
-      githubToken = String(githubToken).trim();
-      window.localStorage.setItem("writerGithubToken", githubToken);
     }
 
     sessionToken = await sha256Hex(String(Date.now()) + ":" + passwordHash + ":" + Math.random());
@@ -106,19 +103,11 @@
       return;
     }
 
+    const githubToken = String(githubTokenInput.value || "").trim();
     if (!githubToken) {
-      githubToken = window.prompt("GitHub 토큰이 비어 있습니다. 다시 입력하세요.");
-      if (!githubToken) {
-        setStatus("토큰 입력이 취소되었습니다.");
-        return;
-      }
-      githubToken = String(githubToken).trim();
-      window.localStorage.setItem("writerGithubToken", githubToken);
+      setStatus("GitHub 토큰을 입력하세요.");
+      return;
     }
-
-    const repoOwner = "{{ site.writer.github_owner }}";
-    const repoName = "{{ site.writer.github_repo }}";
-    const postsPath = "{{ site.writer.posts_path | default: '_posts' }}";
 
     const slug = makeSlug(slugInput.value || title);
     const date = toIsoDate(dateValue);
@@ -143,7 +132,8 @@
         repo: repoName,
         basePath,
         markdown,
-        token: githubToken
+        token: githubToken,
+        branch: defaultBranch
       });
 
       setStatus("발행 완료\n저장 경로: " + finalPath);
@@ -228,10 +218,10 @@
   }
 
   async function createPostWithRetry(options) {
-    const { owner, repo, basePath, markdown, token } = options;
+    const { owner, repo, basePath, markdown, token, branch } = options;
     for (let i = 0; i < 6; i++) {
       const path = i === 0 ? basePath : appendSuffix(basePath, i + 1);
-      const response = await putFile(owner, repo, path, markdown, token);
+      const response = await putFile(owner, repo, path, markdown, token, branch);
       if (response.ok) {
         return path;
       }
@@ -247,12 +237,12 @@
     return path.replace(/\.md$/, "-" + n + ".md");
   }
 
-  async function putFile(owner, repo, path, markdown, token) {
+  async function putFile(owner, repo, path, markdown, token, branch) {
     const url = `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/${encodeURIComponent(path).replace(/%2F/g, "/")}`;
     const body = {
       message: `Add post: ${path}`,
       content: base64EncodeUtf8(markdown),
-      branch: "main"
+      branch: branch || "main"
     };
     return window.fetch(url, {
       method: "PUT",
