@@ -103,6 +103,14 @@ social:
   name                   : # If the user or organization name differs from the site's name
   links: # An array of links to social media profiles
 
+# In-site post writer settings
+writer:
+  enabled                : true
+  github_owner           : "hxetrp52"
+  github_repo            : "hxetrp52.github.io"
+  posts_path             : "_posts"
+  default_category       : "Blog"
+
 # Analytics
 analytics:
   provider               : # false (default), "google", "google-universal", "google-gtag", "custom"
